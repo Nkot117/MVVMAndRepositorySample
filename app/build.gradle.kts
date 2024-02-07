@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.nkot.mvvmandrepositorysample"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.nkot.mvvmandrepositorysample"
