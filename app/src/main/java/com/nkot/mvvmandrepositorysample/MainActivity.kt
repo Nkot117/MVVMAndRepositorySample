@@ -31,8 +31,9 @@ class MainActivity : AppCompatActivity() {
 
         val weatherInfoApiService = retrofit.create(WeatherInfoApiService::class.java)
 
+        val apiKey = BuildConfig.OWM_API_KEY
         GlobalScope.launch {
-            val response = weatherInfoApiService.fetchWeatherInfo("London", "").execute()
+            val response = weatherInfoApiService.fetchWeatherInfo("London", apiKey).execute()
             if (response.isSuccessful) {
                 val weatherInfo = response.body()
                 Log.d("MainActivity", "熊倉：Weather Info: $weatherInfo")
