@@ -3,6 +3,7 @@ package com.nkot.mvvmandrepositorysample
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.nkot.mvvmandrepositorysample.data.WeatherInfoRemoteRepository
 import com.nkot.mvvmandrepositorysample.network.WeatherInfoApiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -16,30 +17,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        fetchWeatherInfo()
+        getWeatherInfo()
     }
 
-    private fun fetchWeatherInfo() {
-        val moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.openweathermap.org/")
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build()
-
-        val weatherInfoApiService = retrofit.create(WeatherInfoApiService::class.java)
-
-        val apiKey = BuildConfig.OWM_API_KEY
+    private fun getWeatherInfo() {
         GlobalScope.launch {
-            val response = weatherInfoApiService.fetchWeatherInfo("London", apiKey).execute()
-            if (response.isSuccessful) {
-                val weatherInfo = response.body()
-                Log.d("MainActivity", "熊倉：Weather Info: $weatherInfo")
-            } else {
-                Log.d("MainActivity", "熊倉：Weather Info: Failed to fetch data.")
-            }
+            val weatherInfo = WeatherInfoRemoteRepository(
+                WeatherInfoApiService.WeatherInfoApiServiceFactory.create()
+            ).getWeatherInfo("Tokyo")
+            Log.d("MainActivity", "熊倉：Weather Info: $weatherInfo")
         }
     }
 }
