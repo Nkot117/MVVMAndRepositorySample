@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         GlobalScope.launch {
             val weatherInfoRepository = WeatherInfoRepository(WeatherInfoRepositoryRemoteSource(WeatherInfoApiService.WeatherInfoApiServiceFactory.create()))
             val weatherInfo = weatherInfoRepository.getWeatherInfo("London")
-            Log.d("MainActivity", "熊倉：WeatherInfo: $weatherInfo")
+            Log.d("MainActivity", "テストログ：WeatherInfo: $weatherInfo")
         }
     }
 }
