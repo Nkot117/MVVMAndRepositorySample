@@ -1,7 +1,7 @@
 package com.nkot.mvvmandrepositorysample.data
 
-import com.nkot.mvvmandrepositorysample.model.WeatherInfo
+import com.nkot.mvvmandrepositorysample.domain.DomainWeatherInfo
 
 interface WeatherInfoRepositoryInterface {
-    suspend fun getWeatherInfo(city: String): WeatherInfo
+    suspend fun getWeatherInfo(city: String): DomainWeatherInfo
 }

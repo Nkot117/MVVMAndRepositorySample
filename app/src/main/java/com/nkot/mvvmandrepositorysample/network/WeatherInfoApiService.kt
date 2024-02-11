@@ -1,6 +1,5 @@
 package com.nkot.mvvmandrepositorysample.network
 
-import com.nkot.mvvmandrepositorysample.model.WeatherInfo
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Call
@@ -28,5 +27,5 @@ interface WeatherInfoApiService {
     fun fetchWeatherInfo(
         @Query("q") cityName: String,
         @Query("appid") apiKey: String,
-    ): Call<WeatherInfo>
+    ): Call<NetworkWeatherInfo>
 }

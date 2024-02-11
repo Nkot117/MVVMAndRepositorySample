@@ -1,6 +1,8 @@
-package com.nkot.mvvmandrepositorysample.model
+package com.nkot.mvvmandrepositorysample.network
 
-data class WeatherInfo(
+import com.nkot.mvvmandrepositorysample.domain.DomainWeatherInfo
+
+data class NetworkWeatherInfo(
     val base: String,
     val clouds: Clouds,
     val cod: Int,
@@ -51,5 +53,12 @@ data class WeatherInfo(
     data class Wind(
         val deg: Int,
         val speed: Double
+    )
+}
+
+fun NetworkWeatherInfo.asDomainModel(): DomainWeatherInfo {
+    return DomainWeatherInfo(
+        city = this.name,
+        weather = this.weather[0].main
     )
 }
