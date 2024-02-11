@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -16,6 +17,15 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true"
+                )
+            }
+        }
     }
 
     buildTypes {
@@ -58,4 +68,11 @@ dependencies {
     val moshi_version = "1.12.0"
     implementation("com.squareup.moshi:moshi:$moshi_version")
     implementation("com.squareup.moshi:moshi-kotlin:$moshi_version")
+
+    // Room
+    val room_version = "2.5.0"
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
 }
