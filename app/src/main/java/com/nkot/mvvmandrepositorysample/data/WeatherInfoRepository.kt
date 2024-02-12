@@ -3,8 +3,9 @@ package com.nkot.mvvmandrepositorysample.data
 import com.nkot.mvvmandrepositorysample.data.cash.WeatherInfoRepositoryLocalCashSource
 import com.nkot.mvvmandrepositorysample.data.remote.WeatherInfoRepositoryRemoteSource
 import com.nkot.mvvmandrepositorysample.domain.DomainWeatherInfo
+import javax.inject.Inject
 
-class WeatherInfoRepository(
+class WeatherInfoRepository @Inject constructor(
     private val weatherInfoRepositoryRemoteSource: WeatherInfoRepositoryRemoteSource,
     private val weatherInfoRepositoryLocalCashSource: WeatherInfoRepositoryLocalCashSource,
 ) {
