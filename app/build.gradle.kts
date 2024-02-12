@@ -68,7 +68,7 @@ dependencies {
     // Retrofit
     val retrofit_version = "2.9.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
-    implementation ("com.squareup.retrofit2:converter-moshi:$retrofit_version")
+    implementation("com.squareup.retrofit2:converter-moshi:$retrofit_version")
 
     // Moshi
     val moshi_version = "1.12.0"
@@ -85,4 +85,8 @@ dependencies {
     // Hilt
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
+
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.activity:activity-ktx:1.8.2")
 }
