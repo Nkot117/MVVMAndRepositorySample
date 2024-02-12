@@ -5,8 +5,9 @@ import com.nkot.mvvmandrepositorysample.data.WeatherInfoRepositoryInterface
 import com.nkot.mvvmandrepositorysample.domain.DomainWeatherInfo
 import com.nkot.mvvmandrepositorysample.network.WeatherInfoApiService
 import com.nkot.mvvmandrepositorysample.network.asDomainModel
+import javax.inject.Inject
 
-class WeatherInfoRepositoryRemoteSource(private val weatherInfoApiService: WeatherInfoApiService) :
+class WeatherInfoRepositoryRemoteSource @Inject constructor(private val weatherInfoApiService: WeatherInfoApiService) :
     WeatherInfoRepositoryInterface {
     override suspend fun getWeatherInfo(city: String): DomainWeatherInfo {
         val response =

@@ -9,20 +9,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface WeatherInfoApiService {
-    object WeatherInfoApiServiceFactory {
-        fun create(): WeatherInfoApiService {
-            val moshi = Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .build()
-
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://api.openweathermap.org/")
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .build()
-            return retrofit.create(WeatherInfoApiService::class.java)
-        }
-    }
-
     @GET("data/2.5/weather")
     fun fetchWeatherInfo(
         @Query("q") cityName: String,
