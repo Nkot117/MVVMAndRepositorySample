@@ -9,8 +9,7 @@ class WeatherInfoRepository @Inject constructor(
     private val weatherInfoRepositoryRemoteSource: WeatherInfoRepositoryRemoteSource,
     private val weatherInfoRepositoryLocalCashSource: WeatherInfoRepositoryLocalCashSource,
 ) {
-
-    suspend fun refreshWeatherInfo(city: String) : DomainWeatherInfo {
+    suspend fun refreshWeatherInfo(city: String): DomainWeatherInfo {
         weatherInfoRepositoryRemoteSource.getWeatherInfo(city).let {
             weatherInfoRepositoryLocalCashSource.insertWeatherInfo(it)
             return it
