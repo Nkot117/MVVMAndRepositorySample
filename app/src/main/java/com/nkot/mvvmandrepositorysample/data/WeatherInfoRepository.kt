@@ -9,10 +9,16 @@ class WeatherInfoRepository @Inject constructor(
     private val weatherInfoRepositoryRemoteSource: WeatherInfoRepositoryRemoteSource,
     private val weatherInfoRepositoryLocalCashSource: WeatherInfoRepositoryLocalCashSource,
 ) {
-    suspend fun refreshWeatherInfo(city: String): DomainWeatherInfo {
+    suspend fun refreshWeatherInfo(city: String): Result<DomainWeatherInfo> {
         weatherInfoRepositoryRemoteSource.getWeatherInfo(city).let {
-            weatherInfoRepositoryLocalCashSource.insertWeatherInfo(it)
-            return it
+            if(it.isSuccess) {
+                it.getOrNull()?.let {
+                    weatherInfoRepositoryLocalCashSource.insertWeatherInfo(it)
+                    return Result.success(it)
+                } ?: return Result.failure(Exception("No weather info found"))
+            } else {
+                return Result.failure(it.exceptionOrNull()!!)
+            }
         }
     }
 }

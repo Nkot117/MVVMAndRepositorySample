@@ -13,8 +13,18 @@ class WeatherInfoRepositoryLocalCashSource @Inject constructor(private val weath
         weatherInfoDao.insert(weatherInfo.asDatabaseModel())
     }
 
-    override suspend fun getWeatherInfo(city: String): DomainWeatherInfo {
-        val weatherInfo = weatherInfoDao.getLatestWeatherInfo(city)
-        return weatherInfo.asDomainModel()
+    override suspend fun getWeatherInfo(city: String): Result<DomainWeatherInfo> {
+        return  try {
+            val weatherInfo = weatherInfoDao.getLatestWeatherInfo(city)
+            if (weatherInfo != null) {
+                Result.success(weatherInfo.asDomainModel())
+            } else {
+                Result.failure(Exception("No weather info found"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+
+
     }
 }

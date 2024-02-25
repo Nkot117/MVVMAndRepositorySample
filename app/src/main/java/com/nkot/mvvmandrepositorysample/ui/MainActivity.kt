@@ -24,15 +24,24 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.weatherInfo.observe(this) { weatherInfo ->
-            binding.cityNameTextView.also {
-                it.text = weatherInfo.city
-                it.visibility = View.VISIBLE
+            if (weatherInfo != null) {
+                binding.cityNameTextView.also {
+                    binding.errorTextView.visibility = View.GONE
+                    it.text = weatherInfo.city
+                    it.visibility = View.VISIBLE
+                }
+                binding.weatherTextView.also {
+                    it.text = weatherInfo.weather
+                    it.visibility = View.VISIBLE
+                }
+                binding.descriptionTextView.visibility = View.VISIBLE
+            } else {
+                binding.cityNameTextView.visibility = View.GONE
+                binding.weatherTextView.visibility = View.GONE
+                binding.descriptionTextView.visibility = View.GONE
+                binding.errorTextView.visibility = View.VISIBLE
             }
-            binding.weatherTextView.also {
-                it.text = weatherInfo.weather
-                it.visibility = View.VISIBLE
-            }
-            binding.descriptionTextView.visibility = View.VISIBLE
+
         }
     }
 

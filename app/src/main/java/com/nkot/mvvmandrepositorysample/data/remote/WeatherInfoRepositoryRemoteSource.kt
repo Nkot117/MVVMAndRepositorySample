@@ -10,10 +10,18 @@ import javax.inject.Inject
 class WeatherInfoRepositoryRemoteSource @Inject constructor(private val weatherInfoApiService: WeatherInfoApiService) :
     WeatherInfoRepositoryInterface {
     private val apiKey = BuildConfig.OWM_API_KEY
-    override suspend fun getWeatherInfo(city: String): DomainWeatherInfo {
-        val response =
-            weatherInfoApiService.fetchWeatherInfo(city, apiKey).execute()
+    override suspend fun getWeatherInfo(city: String): Result<DomainWeatherInfo> {
+        return try {
+            val response =
+                weatherInfoApiService.fetchWeatherInfo(city, apiKey).execute()
 
-        return response.body()!!.asDomainModel()
+            if(response.code() == 200) {
+                Result.success(response.body()!!.asDomainModel())
+            } else {
+                Result.failure(Exception("No weather info found"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 }
